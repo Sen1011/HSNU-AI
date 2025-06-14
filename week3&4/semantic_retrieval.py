@@ -12,8 +12,9 @@ def semantic_retrieval(question, input_txt_dir, input_vec_dir, candidate=10):
   list_vec = []
   q_embed = get_embed(question)
   for ll in file_list:
-    txt_name = os.path.join(input_txt_dir, ll.split('/')[-1])#input_txt_dir + '/'+ ll.split('/')[-1]
-    txt = open(txt_name).read()
+    head, tail = os.path.split(ll)
+    txt_name = os.path.join(input_txt_dir, tail)#input_txt_dir + '/'+ ll.split('/')[-1]
+    txt = open(txt_name, encoding='utf-8').read()
     vec = eval(open(ll).read())
     score = cos_sim(vec,q_embed)
     list_vec.append((txt,score))
